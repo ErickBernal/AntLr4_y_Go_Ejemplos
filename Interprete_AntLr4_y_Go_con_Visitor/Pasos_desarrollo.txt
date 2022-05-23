@@ -1,0 +1,40 @@
+Link
+    * Guia de instalacion de Antlr4 
+        -> https://github.com/antlr/antlr4/blob/master/doc/getting-started.md
+
+//------------------------------------------------------------------------------------------------
+Pasos:
+
+1. Crear la gramatica
+    -> Control.g4
+
+2. compilar la gramatica con antlr4, para generar el interprete con Visitor.
+        -> antlr4 -Dlanguage=Go -o parser -visitor -no-listener Control.g4 
+    
+        2.1 explicacion de parametros de la linea de ejecucion
+            * antlr4:           hace referencia al alias proporcionado por la guia de instalacion.
+            * -Dlanguage=Go:    indicativo del lenguaje a usar para el desarrollo
+            * parser:           Nombre de la carpeta, que contendra la compilacion/interprete en Go(proporcionado por antlr4)
+            * -visitor:         le indica al compilador que genere, un interprete con Visitor (inidica que la gramatica debe ser reconocida, utilizando el arbol "cst/ast")
+            * -no-listener:     le indica al compilador que no genere, un interprete con Listener (no utilice un reconocimiento de gramatica en formato pila)
+            * Control.g4 :      Nombre del archivo de la gramatica
+
+        2.2 La compilacion de la linea 2.0, creara una carpeta llamada "parser", con todo lo necesario para comenzar el desarrllo
+
+
+3. Crear los modulos de Go
+    3.1 crea el modulo
+        -> go mod init main.go
+    3.2 Creamos el go.sum, indicativo del versionamiento del go.mod
+        -> go mod tidy
+
+4. Crear funciones main y Visitor 
+    4.1 con el import "github.com/antlr/antlr4/runtime/Go/antlr", descargar el paquete para Go
+        ->  go get github.com/antlr/antlr4/runtime/Go/antlr
+
+
+//----------------------------------------------------
+Explicacion de extructuras utilizadas
+
+1. Value{}
+    Es una interface que se utilizara como tipo generico (similitud a objet de java)
